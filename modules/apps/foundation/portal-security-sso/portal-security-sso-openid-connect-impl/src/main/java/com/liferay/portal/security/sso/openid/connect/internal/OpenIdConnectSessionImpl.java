@@ -14,20 +14,21 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import java.io.Serializable;
+
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectSession;
 import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.token.AccessToken;
 import com.nimbusds.oauth2.sdk.token.RefreshToken;
 import com.nimbusds.openid.connect.sdk.Nonce;
 import com.nimbusds.openid.connect.sdk.claims.UserInfo;
 
-import java.io.Serializable;
-
 /**
  * @author Edward C. Han
  */
-public class OpenIdConnectSession implements Serializable {
+public class OpenIdConnectSessionImpl implements OpenIdConnectSession, Serializable {
 
-	public OpenIdConnectSession(
+	public OpenIdConnectSessionImpl(
 		String openIdProviderName, Nonce nonce, State state) {
 
 		_openIdProviderName = openIdProviderName;
@@ -37,6 +38,11 @@ public class OpenIdConnectSession implements Serializable {
 
 	public AccessToken getAccessToken() {
 		return _accessToken;
+	}
+
+	@Override
+	public String getAccessTokenString() {
+		return _accessToken.getValue();
 	}
 
 	public long getLoginTime() {
